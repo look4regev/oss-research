@@ -23,6 +23,12 @@ from        awesome_python
 where       (owner, repo) in (select    project_owner, project_name
                               from      commits)
 
+-- awesome_python_repositories_distinct_found_in_commits
+select      distinct repo
+from        awesome_python
+where       (owner, repo) in (select    project_owner, project_name
+                              from      commits)
+
 -- top_repositories_by_contributors_count
 select project_owner as owner, project_name as repo
 from (
@@ -33,3 +39,19 @@ from (
 group by (project_owner, project_name)
 order by count(*) desc
 limit
+
+-- top_owners_by_contributors_count
+select project_owner
+from (
+    select project_owner, project_name, actor
+    from commits
+    group by (project_owner, project_name, actor)
+) dis
+group by project_owner
+order by count(*) desc
+limit
+
+-- repos_of_owners
+select distinct project_name
+from commits
+where project_owner in

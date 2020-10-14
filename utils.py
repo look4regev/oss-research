@@ -49,8 +49,22 @@ def get_awesome_python_repositories_found_in_commits():
     return _get_cursor(_QUERIES["awesome_python_repositories_found_in_commits"])
 
 
+def get_awesome_python_repositories_distinct_found_in_commits():
+    return _single_tuples_strip(_get_cursor(_QUERIES["awesome_python_repositories_distinct_found_in_commits"]))
+
+
 def get_top_repositories_by_contributors_count(limit):
     return _get_cursor(_QUERIES["top_repositories_by_contributors_count"] + str(limit))
+
+
+def get_top_owners_by_contributors_count(limit):
+    return _single_tuples_strip(_get_cursor(_QUERIES["top_owners_by_contributors_count"] + str(limit)))
+
+
+def get_repos_of_owners(owners):
+    owners_csv = "','".join(owners)
+    owners_csv_in_sql = f"('{owners_csv}')"
+    return _single_tuples_strip(_get_cursor(_QUERIES["repos_of_owners"] + owners_csv_in_sql))
 
 
 def _get_cursor(sql):
