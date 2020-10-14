@@ -5,6 +5,7 @@ from utils import get_distinct_awesome_python_owners_found_in_commits, \
     get_awesome_python_repositories_found_in_commits, \
     get_awesome_python_repositories_distinct_found_in_commits, \
     get_top_owners_by_contributors_count, \
+    get_top_repositories_by_contributors_pr_grade_sum, \
     get_repos_of_owners
 
 
@@ -58,6 +59,20 @@ def get_top_repositories_by_contributors_count_also_in_awesome_repositories_perc
     print_stats("top_repositories_by_contributors_count_also_in_awesome_repositories_percentage", precision, recall, TOP_REPOSITORIES_COUNT)
 
 
+def get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage():
+    awesome_python_repositories_found_in_commits = list(get_awesome_python_repositories_found_in_commits())
+    awesome_python_repositories_found_in_commits_count = len(awesome_python_repositories_found_in_commits)
+    top_repositories_by_contributors_count = list(get_top_repositories_by_contributors_pr_grade_sum(TOP_REPOSITORIES_COUNT))
+    top_repositories_by_contributors_count_also_in_awesome_repositories = get_common(
+        top_repositories_by_contributors_count, awesome_python_repositories_found_in_commits)
+    top_repositories_by_contributors_count_also_in_awesome_repositories_count = len(
+        top_repositories_by_contributors_count_also_in_awesome_repositories)
+    precision = 100 * top_repositories_by_contributors_count_also_in_awesome_repositories_count / TOP_REPOSITORIES_COUNT
+    recall = 100 * top_repositories_by_contributors_count_also_in_awesome_repositories_count / awesome_python_repositories_found_in_commits_count
+    print_stats("get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage", precision, recall,
+                TOP_REPOSITORIES_COUNT)
+
+
 def get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage():
     distinct_awesome_python_owners_found_in_commits = list(get_distinct_awesome_python_owners_found_in_commits())
     distinct_awesome_python_owners_found_in_commits_count = len(distinct_awesome_python_owners_found_in_commits)
@@ -73,13 +88,15 @@ def main():
     get_top_pr_repos_also_in_awesome_repos_percentage()
     get_top_pr_owners_also_in_awesome_owners_percentage()
     get_top_repositories_by_contributors_count_also_in_awesome_repositories_percentage()
+    get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage()
     get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage()
 
 
 if __name__ == "__main__":
     main()
 
-# [top_pr_repos_also_in_awesome_repos_percentage                                 ] precision: 16.44444% 	 recall: 32.45614% 	 f1: 0.21829	 algo_results_count: 450
-# [top_pr_owners_also_in_awesome_owners_percentage                               ] precision: 25.65056% 	 recall: 25.65056% 	 f1: 0.25651	 algo_results_count: 269
-# [top_repositories_by_contributors_count_also_in_awesome_repositories_percentage] precision: 22.80702% 	 recall: 22.80702% 	 f1: 0.22807	 algo_results_count: 228
-# [top_owners_by_contributors_count_also_in_awesome_owners_percentage            ] precision: 28.99628% 	 recall: 28.99628% 	 f1: 0.28996	 algo_results_count: 269
+# [top_pr_repos_also_in_awesome_repos_percentage                                            ] precision: 15.86074% 	 recall: 35.96491% 	 f1: 0.22013	 algo_results_count: 517
+# [top_pr_owners_also_in_awesome_owners_percentage                                          ] precision: 25.65056% 	 recall: 25.65056% 	 f1: 0.25651	 algo_results_count: 269
+# [top_repositories_by_contributors_count_also_in_awesome_repositories_percentage           ] precision: 22.80702% 	 recall: 22.80702% 	 f1: 0.22807	 algo_results_count: 228
+# [get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage] precision: 20.61404% 	 recall: 20.61404% 	 f1: 0.20614	 algo_results_count: 228
+# [top_owners_by_contributors_count_also_in_awesome_owners_percentage                       ] precision: 28.99628% 	 recall: 28.99628% 	 f1: 0.28996	 algo_results_count: 269

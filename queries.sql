@@ -40,6 +40,18 @@ group by (project_owner, project_name)
 order by count(*) desc
 limit
 
+-- top_repositories_by_contributors_pr_grade_sum
+select project_owner as owner, project_name as repo
+from (
+    select c.project_owner, c.project_name, c.actor, u.grade
+    from commits c
+    join user_pr_grade u on c.actor = u.owner_actor
+    group by (c.project_owner, c.project_name, c.actor, u.grade)
+) dis
+group by (project_owner, project_name)
+order by sum(grade) desc
+limit
+
 -- top_owners_by_contributors_count
 select project_owner
 from (

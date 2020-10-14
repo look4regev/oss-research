@@ -57,6 +57,10 @@ def get_top_repositories_by_contributors_count(limit):
     return _get_cursor(_QUERIES["top_repositories_by_contributors_count"] + str(limit))
 
 
+def get_top_repositories_by_contributors_pr_grade_sum(limit):
+    return _get_cursor(_QUERIES["top_repositories_by_contributors_pr_grade_sum"] + str(limit))
+
+
 def get_top_owners_by_contributors_count(limit):
     return _single_tuples_strip(_get_cursor(_QUERIES["top_owners_by_contributors_count"] + str(limit)))
 
@@ -65,6 +69,16 @@ def get_repos_of_owners(owners):
     owners_csv = "','".join(owners)
     owners_csv_in_sql = f"('{owners_csv}')"
     return _single_tuples_strip(_get_cursor(_QUERIES["repos_of_owners"] + owners_csv_in_sql))
+
+
+def insert_pr(pr):
+    conn = _get_conn()
+    cur = conn.cursor()
+    values = ','.join([f"('{owner_user}', {pr_grade})" for owner_user, pr_grade in pr.items()])
+    sql = f"insert into user_pr_grade(owner_actor, grade) values {values}"
+    cur.execute(sql)
+    conn.commit()
+    cur.close()
 
 
 def _get_cursor(sql):
