@@ -85,17 +85,17 @@ def get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage
 
 def main():
     get_top_pr_repos_also_in_awesome_repos_percentage()
-    # get_top_pr_owners_also_in_awesome_owners_percentage()
+    get_top_pr_owners_also_in_awesome_owners_percentage()
     get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage()
     get_top_repositories_by_contributors_count_also_in_awesome_repositories_percentage()
-    # get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage()
+    get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage()
 
 
 if __name__ == "__main__":
     main()
 
-# [top_pr_repos_also_in_awesome_repos_percentage                                            ] precision: 15.86074% 	 recall: 35.96491% 	 f1: 0.22013	 algo_results_count: 517
-# [top_pr_owners_also_in_awesome_owners_percentage                                          ] precision: 25.65056% 	 recall: 25.65056% 	 f1: 0.25651	 algo_results_count: 269
-# [get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage] precision: 20.61404% 	 recall: 20.61404% 	 f1: 0.20614	 algo_results_count: 228
-# [top_repositories_by_contributors_count_also_in_awesome_repositories_percentage           ] precision: 22.80702% 	 recall: 22.80702% 	 f1: 0.22807	 algo_results_count: 228
-# [top_owners_by_contributors_count_also_in_awesome_owners_percentage                       ] precision: 28.99628% 	 recall: 28.99628% 	 f1: 0.28996	 algo_results_count: 269
+# [top_pr_repos_also_in_awesome_repos_percentage                                        ] precision: 15.98441% 	 recall: 29.07801% 	 f1: 0.20629 	 algo_results_count: 513
+# [top_pr_owners_also_in_awesome_owners_percentage                                      ] precision: 28.62454% 	 recall: 28.73134% 	 f1: 0.28678 	 algo_results_count: 269
+# [top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage] precision: 28.50877% 	 recall: 23.04965% 	 f1: 0.2549 	 algo_results_count: 228
+# [top_repositories_by_contributors_count_also_in_awesome_repositories_percentage       ] precision: 28.50877% 	 recall: 23.04965% 	 f1: 0.2549 	 algo_results_count: 228
+# [top_owners_by_contributors_count_also_in_awesome_owners_percentage                   ] precision: 28.99628% 	 recall: 29.10448% 	 f1: 0.2905 	 algo_results_count: 269
