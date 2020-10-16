@@ -6,6 +6,8 @@ from utils import get_distinct_awesome_python_owners_found_in_commits, \
     get_awesome_python_repositories_distinct_found_in_commits, \
     get_top_owners_by_contributors_count, \
     get_top_repositories_by_contributors_pr_grade_sum, \
+    get_distinct_actors_of_owner, \
+    get_organizations, \
     get_repos_of_owners
 
 
@@ -13,7 +15,7 @@ def print_stats(prefix, precision, recall, algo_results_count):
     precision_f = precision / 100
     recall_f = recall / 100
     f1 = round(2 * (precision_f * recall_f) / (precision_f + recall_f), 5)
-    prefix = prefix.ljust(78)
+    prefix = prefix.ljust(85)
     print(f"[{prefix}] precision: {round(precision, 5)}% \t recall: {round(recall, 5)}% \t f1: {f1}\t algo_results_count: {algo_results_count}")
 
 
@@ -34,7 +36,9 @@ def get_top_pr_owners_also_in_awesome_owners_percentage():
 
 
 def get_top_pr_repos_also_in_awesome_repos_percentage():
-    top_owners_by_pr_commits = get_top_owners_by_pagerank_commits(TOP_OWNERS_COUNT)
+    # orgs = get_organizations()
+    # owners_to_remove_and_spread_to_actors = {owner: get_distinct_actors_of_owner(owner) for owner in orgs}
+    top_owners_by_pr_commits = get_top_owners_by_pagerank_commits(TOP_OWNERS_COUNT)#, owners_to_remove_and_spread_to_actors=owners_to_remove_and_spread_to_actors)
     distinct_awesome_python_owners_found_in_commits = list(get_distinct_awesome_python_owners_found_in_commits())
     top_pr_owners_also_in_awesome_owners = get_common(top_owners_by_pr_commits, distinct_awesome_python_owners_found_in_commits)
     top_pr_owners_repos = get_repos_of_owners(top_pr_owners_also_in_awesome_owners)
@@ -69,7 +73,7 @@ def get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositori
         top_repositories_by_contributors_count_also_in_awesome_repositories)
     precision = 100 * top_repositories_by_contributors_count_also_in_awesome_repositories_count / TOP_REPOSITORIES_COUNT
     recall = 100 * top_repositories_by_contributors_count_also_in_awesome_repositories_count / awesome_python_repositories_found_in_commits_count
-    print_stats("get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage", precision, recall,
+    print_stats("top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage", precision, recall,
                 TOP_REPOSITORIES_COUNT)
 
 
@@ -86,10 +90,10 @@ def get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage
 
 def main():
     get_top_pr_repos_also_in_awesome_repos_percentage()
-    get_top_pr_owners_also_in_awesome_owners_percentage()
-    get_top_repositories_by_contributors_count_also_in_awesome_repositories_percentage()
+    # get_top_pr_owners_also_in_awesome_owners_percentage()
     get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage()
-    get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage()
+    get_top_repositories_by_contributors_count_also_in_awesome_repositories_percentage()
+    # get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage()
 
 
 if __name__ == "__main__":
@@ -97,6 +101,6 @@ if __name__ == "__main__":
 
 # [top_pr_repos_also_in_awesome_repos_percentage                                            ] precision: 15.86074% 	 recall: 35.96491% 	 f1: 0.22013	 algo_results_count: 517
 # [top_pr_owners_also_in_awesome_owners_percentage                                          ] precision: 25.65056% 	 recall: 25.65056% 	 f1: 0.25651	 algo_results_count: 269
-# [top_repositories_by_contributors_count_also_in_awesome_repositories_percentage           ] precision: 22.80702% 	 recall: 22.80702% 	 f1: 0.22807	 algo_results_count: 228
 # [get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage] precision: 20.61404% 	 recall: 20.61404% 	 f1: 0.20614	 algo_results_count: 228
+# [top_repositories_by_contributors_count_also_in_awesome_repositories_percentage           ] precision: 22.80702% 	 recall: 22.80702% 	 f1: 0.22807	 algo_results_count: 228
 # [top_owners_by_contributors_count_also_in_awesome_owners_percentage                       ] precision: 28.99628% 	 recall: 28.99628% 	 f1: 0.28996	 algo_results_count: 269
