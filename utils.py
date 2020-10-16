@@ -71,11 +71,20 @@ def get_repos_of_owners(owners):
     return _single_tuples_strip(_get_cursor(_QUERIES["repos_of_owners"] + owners_csv_in_sql))
 
 
+def get_organizations():
+    return _single_tuples_strip(_get_cursor(_QUERIES["get_organizations"]))
+
+
+def get_distinct_actors_of_owner(owner):
+    return _single_tuples_strip(_get_cursor(_QUERIES["get_distinct_actors_of_owner"] + f"'{owner}'"))
+
+
 def insert_pr(pr):
     conn = _get_conn()
     cur = conn.cursor()
     values = ','.join([f"('{owner_user}', {pr_grade})" for owner_user, pr_grade in pr.items()])
     sql = f"insert into user_pr_grade(owner_actor, grade) values {values}"
+    cur.execute("truncate user_pr_grade")
     cur.execute(sql)
     conn.commit()
     cur.close()
