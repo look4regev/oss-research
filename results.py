@@ -94,8 +94,8 @@ def main():
 if __name__ == "__main__":
     main()
 
-# [top_pr_repos_also_in_awesome_repos_percentage                                        ] precision: 15.98441% 	 recall: 29.07801% 	 f1: 0.20629 	 algo_results_count: 513
-# [top_pr_owners_also_in_awesome_owners_percentage                                      ] precision: 28.62454% 	 recall: 28.73134% 	 f1: 0.28678 	 algo_results_count: 269
-# [top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage] precision: 28.50877% 	 recall: 23.04965% 	 f1: 0.2549 	 algo_results_count: 228
+# [top_pr_repos_also_in_awesome_repos_percentage                                        ] precision: 12.5% 	     recall: 0.35461% 	 f1: 0.0069 	 algo_results_count: 8
+# [top_pr_owners_also_in_awesome_owners_percentage                                      ] precision: 0.37175% 	 recall: 0.37313% 	 f1: 0.00372 	 algo_results_count: 269
+# [top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage] precision: 30.26316% 	 recall: 24.46809% 	 f1: 0.27059 	 algo_results_count: 228
 # [top_repositories_by_contributors_count_also_in_awesome_repositories_percentage       ] precision: 28.50877% 	 recall: 23.04965% 	 f1: 0.2549 	 algo_results_count: 228
 # [top_owners_by_contributors_count_also_in_awesome_owners_percentage                   ] precision: 28.99628% 	 recall: 29.10448% 	 f1: 0.2905 	 algo_results_count: 269

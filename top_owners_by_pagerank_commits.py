@@ -20,7 +20,8 @@ def get_pr(read_from_cache_file=CACHE_PR):
 
     print("Iterating commits_owner_actor_count")
     for (owner, actor, commits_count) in commits_owner_actor_count:
-        graph.add_edge(actor, owner, weight=commits_count)
+        if actor == owner:
+            graph.add_edge(f"{actor}_pr_copy", owner, weight=commits_count)
 
     print("Running page rank")
     pr = pagerank(graph, weight=commits_count)
