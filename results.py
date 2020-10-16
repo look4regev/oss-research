@@ -3,7 +3,6 @@ from top_owners_by_pagerank_commits import get_top_owners_by_pagerank_commits
 from utils import get_distinct_awesome_python_owners_found_in_commits, \
     get_top_repositories_by_contributors_count, \
     get_awesome_python_repositories_found_in_commits, \
-    get_awesome_python_repositories_distinct_found_in_commits, \
     get_top_owners_by_contributors_count, \
     get_top_repositories_by_contributors_pr_grade_sum, \
     get_repos_of_owners
@@ -38,7 +37,7 @@ def get_top_pr_repos_also_in_awesome_repos_percentage():
     distinct_awesome_python_owners_found_in_commits = list(get_distinct_awesome_python_owners_found_in_commits())
     top_pr_owners_also_in_awesome_owners = get_common(top_owners_by_pr_commits, distinct_awesome_python_owners_found_in_commits)
     top_pr_owners_repos = get_repos_of_owners(top_pr_owners_also_in_awesome_owners)
-    awesome_python_repositories_found_in_commits = list(get_awesome_python_repositories_distinct_found_in_commits())
+    awesome_python_repositories_found_in_commits = list(get_awesome_python_repositories_found_in_commits())
     awesome_python_repositories_found_in_commits_count = len(awesome_python_repositories_found_in_commits)
     top_pr_owners_repos_also_in_awesome_repositories = get_common(top_pr_owners_repos, awesome_python_repositories_found_in_commits)
     top_pr_owners_repos_also_in_awesome_repositories_count = len(top_pr_owners_repos_also_in_awesome_repositories)
