@@ -49,7 +49,7 @@ from (
     group by (c.project_owner, c.project_name, c.actor, u.grade)
 ) dis
 group by (project_owner, project_name)
-order by sum(grade) desc
+order by sum(1/sqrt(sqrt(grade))) desc
 limit
 
 -- top_owners_by_contributors_count
@@ -67,3 +67,13 @@ limit
 select distinct project_name
 from commits
 where project_owner in
+
+-- get_organizations
+select distinct project_owner
+from commits
+where project_owner not in (select distinct actor from commits)
+
+-- get_distinct_actors_of_owner
+select distinct actor
+from commits
+where project_owner =
