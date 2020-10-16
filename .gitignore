@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 .idea
+
+# Local cache files
+*pr_owners.csv
