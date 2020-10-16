@@ -46,15 +46,15 @@ def get_distinct_awesome_python_owners_found_in_commits():
 
 
 def get_awesome_python_repositories_found_in_commits():
-    return _get_cursor(_QUERIES["awesome_python_repositories_found_in_commits"])
+    return _single_tuples_strip(_get_cursor(_QUERIES["awesome_python_repositories_found_in_commits"]))
 
 
 def get_top_repositories_by_contributors_count(limit):
-    return _get_cursor(_QUERIES["top_repositories_by_contributors_count"] + str(limit))
+    return _single_tuples_strip(_get_cursor(_QUERIES["top_repositories_by_contributors_count"] + str(limit)))
 
 
 def get_top_repositories_by_contributors_pr_grade_sum(limit):
-    return _get_cursor(_QUERIES["top_repositories_by_contributors_pr_grade_sum"] + str(limit))
+    return _single_tuples_strip(_get_cursor(_QUERIES["top_repositories_by_contributors_pr_grade_sum"] + str(limit)))
 
 
 def get_top_owners_by_contributors_count(limit):

@@ -13,7 +13,7 @@ def print_stats(prefix, precision, recall, algo_results_count):
     recall_f = recall / 100
     f1 = round(2 * (precision_f * recall_f) / (precision_f + recall_f), 5)
     prefix = prefix.ljust(85)
-    print(f"[{prefix}] precision: {round(precision, 5)}% \t recall: {round(recall, 5)}% \t f1: {f1}\t algo_results_count: {algo_results_count}")
+    print(f"[{prefix}] precision: {round(precision, 5)}% \t recall: {round(recall, 5)}% \t f1: {f1} \t algo_results_count: {algo_results_count}")
 
 
 def get_common(a, b):
