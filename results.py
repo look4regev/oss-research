@@ -6,8 +6,6 @@ from utils import get_distinct_awesome_python_owners_found_in_commits, \
     get_awesome_python_repositories_distinct_found_in_commits, \
     get_top_owners_by_contributors_count, \
     get_top_repositories_by_contributors_pr_grade_sum, \
-    get_distinct_actors_of_owner, \
-    get_organizations, \
     get_repos_of_owners
 
 
@@ -36,9 +34,7 @@ def get_top_pr_owners_also_in_awesome_owners_percentage():
 
 
 def get_top_pr_repos_also_in_awesome_repos_percentage():
-    # orgs = get_organizations()
-    # owners_to_remove_and_spread_to_actors = {owner: get_distinct_actors_of_owner(owner) for owner in orgs}
-    top_owners_by_pr_commits = get_top_owners_by_pagerank_commits(TOP_OWNERS_COUNT)#, owners_to_remove_and_spread_to_actors=owners_to_remove_and_spread_to_actors)
+    top_owners_by_pr_commits = get_top_owners_by_pagerank_commits(TOP_OWNERS_COUNT)
     distinct_awesome_python_owners_found_in_commits = list(get_distinct_awesome_python_owners_found_in_commits())
     top_pr_owners_also_in_awesome_owners = get_common(top_owners_by_pr_commits, distinct_awesome_python_owners_found_in_commits)
     top_pr_owners_repos = get_repos_of_owners(top_pr_owners_also_in_awesome_owners)
