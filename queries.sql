@@ -43,7 +43,7 @@ from (
     group by (c.project_name, c.actor, u.grade)
 ) dis
 group by project_name
-order by sum(1/sqrt(sqrt(grade))) desc
+order by sum(grade) desc
 limit
 
 -- top_owners_by_contributors_count
