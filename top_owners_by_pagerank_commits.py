@@ -7,9 +7,18 @@ from utils import get_commits_owner_actor_count, insert_pr
 
 PR_CACHE_FILE_NAME = "pr_owners.csv"
 TOP_PR_CACHE_FILE_NAME = "top_pr_owners.csv"
+CACHE_PR = False
 
 
-def get_pr(read_from_cache_file=True):
+def _remove_and_spread_owners_to_actors(pr, owners_to_remove_and_spread_to_actors):
+    for owner, actors in owners_to_remove_and_spread_to_actors.items():
+        grade_inc = pr[owner] / len(actors)
+        del pr[owner]
+        for actor in actors:
+            pr[actor] += grade_inc
+
+
+def get_pr(read_from_cache_file=CACHE_PR, owners_to_remove_and_spread_to_actors=None):
     if read_from_cache_file:
         with open(PR_CACHE_FILE_NAME, "rt") as f:
             return json.loads(f.read())
@@ -24,6 +33,10 @@ def get_pr(read_from_cache_file=True):
     print("Running page rank")
     pr = pagerank(graph, weight=commits_count)
 
+    if owners_to_remove_and_spread_to_actors:
+        print("Dividing and removing organizations' grades to their actors")
+        _remove_and_spread_owners_to_actors(pr, owners_to_remove_and_spread_to_actors)
+
     with open(PR_CACHE_FILE_NAME, "wt") as f:
         f.write(json.dumps(pr))
 
@@ -33,14 +46,14 @@ def get_pr(read_from_cache_file=True):
     return pr
 
 
-def get_top_owners_by_pagerank_commits(top_count, read_from_cache_file=True):
+def get_top_owners_by_pagerank_commits(top_count, read_from_cache_file=CACHE_PR, owners_to_remove_and_spread_to_actors=None):
     if read_from_cache_file:
         with open(TOP_PR_CACHE_FILE_NAME, "rt") as f:
             return set(islice(
                 map(lambda x: x[1:-1], f.read()[1:-1].split(", "))
                 , top_count))
 
-    pr = get_pr(read_from_cache_file)
+    pr = get_pr(read_from_cache_file, owners_to_remove_and_spread_to_actors)
 
     pr_ordered = {
         k: v for k, v in sorted(pr.items(), key=lambda item: item[1], reverse=True)
