@@ -56,20 +56,22 @@ def get_top_repositories_by_contributors_count_also_in_awesome_repositories_perc
     precision = 100 * top_repositories_by_contributors_count_also_in_awesome_repositories_count / TOP_REPOSITORIES_COUNT
     recall = 100 * top_repositories_by_contributors_count_also_in_awesome_repositories_count / awesome_python_repositories_found_in_commits_count
     print_stats("top_repositories_by_contributors_count_also_in_awesome_repositories_percentage", precision, recall, TOP_REPOSITORIES_COUNT)
+    return set(top_repositories_by_contributors_count_also_in_awesome_repositories)
 
 
 def get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage():
     awesome_python_repositories_found_in_commits = list(get_awesome_python_repositories_found_in_commits())
     awesome_python_repositories_found_in_commits_count = len(awesome_python_repositories_found_in_commits)
-    top_repositories_by_contributors_count = list(get_top_repositories_by_contributors_pr_grade_sum(TOP_REPOSITORIES_COUNT))
-    top_repositories_by_contributors_count_also_in_awesome_repositories = get_common(
-        top_repositories_by_contributors_count, awesome_python_repositories_found_in_commits)
-    top_repositories_by_contributors_count_also_in_awesome_repositories_count = len(
-        top_repositories_by_contributors_count_also_in_awesome_repositories)
-    precision = 100 * top_repositories_by_contributors_count_also_in_awesome_repositories_count / TOP_REPOSITORIES_COUNT
-    recall = 100 * top_repositories_by_contributors_count_also_in_awesome_repositories_count / awesome_python_repositories_found_in_commits_count
+    top_repositories_by_contributors_pr_grade = list(get_top_repositories_by_contributors_pr_grade_sum(TOP_REPOSITORIES_COUNT))
+    top_repositories_by_contributors_pr_grade_also_in_awesome_repositories = get_common(
+        top_repositories_by_contributors_pr_grade, awesome_python_repositories_found_in_commits)
+    top_repositories_by_contributors_pr_grade_also_in_awesome_repositories_count = len(
+        top_repositories_by_contributors_pr_grade_also_in_awesome_repositories)
+    precision = 100 * top_repositories_by_contributors_pr_grade_also_in_awesome_repositories_count / TOP_REPOSITORIES_COUNT
+    recall = 100 * top_repositories_by_contributors_pr_grade_also_in_awesome_repositories_count / awesome_python_repositories_found_in_commits_count
     print_stats("top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage", precision, recall,
                 TOP_REPOSITORIES_COUNT)
+    return set(top_repositories_by_contributors_pr_grade_also_in_awesome_repositories)
 
 
 def get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage():
@@ -84,18 +86,26 @@ def get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage
 
 
 def main():
-    get_top_pr_repos_also_in_awesome_repos_percentage()
-    get_top_pr_owners_also_in_awesome_owners_percentage()
-    get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage()
-    get_top_repositories_by_contributors_count_also_in_awesome_repositories_percentage()
-    get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage()
+    # get_top_pr_repos_also_in_awesome_repos_percentage()
+    # get_top_pr_owners_also_in_awesome_owners_percentage()
+    mine = get_top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage()
+    bench = get_top_repositories_by_contributors_count_also_in_awesome_repositories_percentage()
+    mine_not_in_bench = mine - bench
+    bench_not_in_mine = bench - mine
+    both = mine & bench
+    print(f"mine: {len(mine)}, bench: {len(bench)}, mine_not_in_bench: {len(mine_not_in_bench)}, bench_not_in_mine: {len(bench_not_in_mine)}, both: {len(both)},")
+    print(f"mine found in awesome but not in benchmark: {mine_not_in_bench}")
+    print(f"benchmark found in awesome but not in mine: {bench_not_in_mine}")
+    print(f"both mine and benchmark found from awesome: {both}")
+    # get_top_owners_by_contributors_count_also_in_awesome_repositories_percentage()
 
 
 if __name__ == "__main__":
     main()
 
-# [top_pr_repos_also_in_awesome_repos_percentage                                        ] precision: 12.5% 	     recall: 0.35461% 	 f1: 0.0069 	 algo_results_count: 8
-# [top_pr_owners_also_in_awesome_owners_percentage                                      ] precision: 0.37175% 	 recall: 0.37313% 	 f1: 0.00372 	 algo_results_count: 269
 # [top_repositories_by_contributors_pr_grade_sum_also_in_awesome_repositories_percentage] precision: 30.26316% 	 recall: 24.46809% 	 f1: 0.27059 	 algo_results_count: 228
 # [top_repositories_by_contributors_count_also_in_awesome_repositories_percentage       ] precision: 28.50877% 	 recall: 23.04965% 	 f1: 0.2549 	 algo_results_count: 228
-# [top_owners_by_contributors_count_also_in_awesome_owners_percentage                   ] precision: 28.99628% 	 recall: 29.10448% 	 f1: 0.2905 	 algo_results_count: 269
+# mine: 69, bench: 65, mine_not_in_bench: 18, bench_not_in_mine: 14, both: 51,
+# mine found in awesome but not in benchmark: {'watchdog', 'schematics', 'django-taggit', 'deform', 'vcrpy', 'pudb', 'django-activity-stream', 'django-shop', 'sh', 'model_mommy', 'factory_boy', 'cornice', 'tablib', 'vispy', 'django-devserver', 'freezegun', 'pip-tools', 'twython'}
+# benchmark found in awesome but not in mine: {'pydal', 'thefuck', 'thumbor', 'coala', 'errbot', 'mxnet', 'statsmodels', 'spyder', 'zipline', 'faker', 'xgboost', 'pymc3', 'mrjob', 's3cmd'}
+# both mine and benchmark found from awesome: {'django-debug-toolbar', 'mkdocs', 'flask-restful', 'dask', 'mezzanine', 'bokeh', 'supervisor', 'peewee', 'pelican', 'rq', 'virtualenv', 'mongoengine', 'django-allauth', 'conda', 'sanic', 'fabric', 'beets', 'flower', 'falcon', 'feincms', 'django-crispy-forms', 'cookiecutter', 'django-storages', 'urllib3', 'eve', 'sympy', 'keras', 'nikola', 'paramiko', 'django-oauth-toolkit', 'django-guardian', 'channels', 'ansible', 'django-pipeline', 'python-social-auth', 'requests', 'luigi', 'gunicorn', 'sphinx', 'werkzeug', 'oauthlib', 'kafka-python', 'pyinstaller', 'salt', 'splinter', 'hypothesis', 'pyenv', 'webassets', 'gensim', 'flask-admin', 'django-haystack'}

@@ -88,3 +88,7 @@ left join awesome_python a on c.project_owner = a.owner and c.project_name = a.r
 group by (c.project_owner, c.project_name, c.actor, u.grade, a.repo)
 order by u.grade desc
 limit
+
+-- get_distinct_actors_count
+select count(distinct actor)
+from commits
